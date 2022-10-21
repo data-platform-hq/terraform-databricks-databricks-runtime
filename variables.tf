@@ -109,12 +109,12 @@ variable "spark_version" {
 
 variable "node_type" {
   type        = string
-  description = "databricks_node_type id"
+  description = "Databricks_node_type id"
   default     = "Standard_D3_v2"
 }
 
 variable "mountpoints" {
   type        = map(any)
-  description = "mountpoints for databricks"
+  description = "Mountpoints for databricks"
   default     = null
 }
