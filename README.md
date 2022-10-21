@@ -1,5 +1,5 @@
 # Databricks Workspace Terraform module
-Terraform module for creation Databricks Workspace using Databricks provider
+Terraform module used for Databricks Workspace configuration and Resources creation
 
 ## Usage
 
