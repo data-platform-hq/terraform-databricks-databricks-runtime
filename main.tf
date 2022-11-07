@@ -18,8 +18,6 @@ locals {
     (var.sp_client_id_secret_name) = { value = data.azurerm_key_vault_secret.sp_client_id.value }
     (var.sp_key_secret_name)       = { value = data.azurerm_key_vault_secret.sp_key.value }
   })
-  secret_scope_name = var.use_local_secret_scope ? databricks_secret_scope.this[0].name : "main"
-  mount_secret_name = var.use_local_secret_scope ? databricks_secret.this[var.sp_key_secret_name].key : data.azurerm_key_vault_secret.sp_key.name
 }
 
 resource "databricks_token" "pat" {
