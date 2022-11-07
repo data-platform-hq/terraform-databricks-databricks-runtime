@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.0.0...v1.0.1) (2022-11-07)
+
+
+### Bug Fixes
+
+* fixed bug on destroy ([7a65889](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/7a658892fba8e8b56d15af29fc568679537723cc))
+
 # 1.0.0 (2022-10-21)
 
 
