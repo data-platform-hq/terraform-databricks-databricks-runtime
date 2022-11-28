@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.0.1...v1.0.2) (2022-11-28)
+
+
+### Bug Fixes
+
+* changed required providers ([5137f62](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/5137f624d24768ccfb24d49d919552d5edcfe902))
+
 ## [1.0.1](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.0.0...v1.0.1) (2022-11-07)
 
 
