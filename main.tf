@@ -45,6 +45,7 @@ resource "databricks_cluster" "this" {
   cluster_name  = "shared autoscaling"
   spark_version = var.spark_version
 
+  data_security_mode      = var.data_security_mode
   node_type_id            = var.node_type
   autotermination_minutes = var.autotermination_minutes
 
@@ -63,5 +64,9 @@ resource "databricks_cluster" "this" {
     ignore_changes = [
       state
     ]
+    precondition {
+      condition     = var.data_security_mode == "USER_ISOLATION" ? contains(["11.3.x-scala2.12", "12.0.x-scala2.12"], var.spark_version) : true
+      error_message = "When USER_ISOLATION is selected, please set spark version to be either one of these values: '11.3.x-scala2.12', '12.0.x-scala2.12'"
+    }
   }
 }

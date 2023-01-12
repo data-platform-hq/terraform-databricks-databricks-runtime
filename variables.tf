@@ -101,10 +101,20 @@ variable "permissions" {
   ]
 }
 
+variable "data_security_mode" {
+  type        = string
+  description = "Security features of the cluster"
+  default     = "USER_ISOLATION"
+  validation {
+    condition     = contains(["SINGLE_USER", "USER_ISOLATION", "NONE"], var.data_security_mode)
+    error_message = "Catalog Access mode must be either 'SINGLE_USER', 'USER_ISOLATION' or 'NONE' value"
+  }
+}
+
 variable "spark_version" {
   type        = string
   description = "Runtime version"
-  default     = "9.1.x-scala2.12"
+  default     = "11.3.x-scala2.12"
 }
 
 variable "node_type" {
