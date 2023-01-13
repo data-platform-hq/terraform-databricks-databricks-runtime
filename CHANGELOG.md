@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.0.2...v1.1.0) (2023-01-13)
+
+
+### Features
+
+* unity cluster; mount with secrets output; mount with default cluster ([04699c5](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/04699c521ad7ef081c5970e7a0ecbf30cccc39ad))
+
 ## [1.0.2](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.0.1...v1.0.2) (2022-11-28)
 
 
