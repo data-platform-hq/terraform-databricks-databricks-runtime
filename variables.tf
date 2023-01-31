@@ -117,6 +117,12 @@ variable "spark_version" {
   default     = "11.3.x-scala2.12"
 }
 
+variable "spark_conf" {
+  type        = map(any)
+  description = "Map with key-value pairs to fine-tune Spark clusters, where you can provide custom Spark configuration properties in a cluster configuration."
+  default     = {}
+}
+
 variable "node_type" {
   type        = string
   description = "Databricks_node_type id"
