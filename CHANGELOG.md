@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.1.0...v1.1.1) (2023-01-31)
+
+
+### Bug Fixes
+
+* added spark_conf variable to cluster ([310a044](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/310a044920e2d435d48f19c295258a281613982a))
+
 # [1.1.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.0.2...v1.1.0) (2023-01-13)
 
 
