@@ -125,11 +125,11 @@ variable "spark_conf" {
 
 variable "cluster_log_conf_destination" {
   type        = string
-  description = "Provide a dbfs location, example 'dbfs:/cluster-logs', to push all cluster logs to certain location"
+  description = "Provide a dbfs location to push all cluster logs to certain location"
   default     = ""
   validation {
     condition     = length(var.cluster_log_conf_destination) == 0 ? true : startswith(var.cluster_log_conf_destination, "dbfs:/")
-    error_message = "Provide valid path to dbfs logs folder, example: 'dbfs:/mnt/logs'"
+    error_message = "Provide valid path to dbfs logs folder, example: 'dbfs:/logs'"
   }
 }
 
