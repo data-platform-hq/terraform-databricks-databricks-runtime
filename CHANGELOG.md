@@ -1,3 +1,11 @@
+## [1.1.4](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.1.3...v1.1.4) (2023-02-01)
+
+
+### Bug Fixes
+
+* cluster_log_conf parameter in cluster creation ([6c586f6](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/6c586f693ea4c71aa55c6556f6e4e2bc188960f1))
+* updated error message in var ([7a743fd](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/7a743fd6e9a49b05290c1517f00d5f1025bb22b6))
+
 ## [1.1.3](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.1.2...v1.1.3) (2023-02-01)
 
 
