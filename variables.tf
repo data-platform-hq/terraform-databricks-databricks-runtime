@@ -104,7 +104,7 @@ variable "permissions" {
 variable "data_security_mode" {
   type        = string
   description = "Security features of the cluster"
-  default     = "USER_ISOLATION"
+  default     = "NONE"
   validation {
     condition     = contains(["SINGLE_USER", "USER_ISOLATION", "NONE"], var.data_security_mode)
     error_message = "Catalog Access mode must be either 'SINGLE_USER', 'USER_ISOLATION' or 'NONE' value"
