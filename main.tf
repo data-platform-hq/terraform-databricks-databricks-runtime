@@ -61,6 +61,15 @@ resource "databricks_cluster" "this" {
     spot_bid_max_price = var.spot_bid_max_price
   }
 
+  dynamic "cluster_log_conf" {
+    for_each = length(var.cluster_log_conf_destination) == 0 ? [] : [var.cluster_log_conf_destination]
+    content {
+      dbfs {
+        destination = cluster_log_conf.value
+      }
+    }
+  }
+
   lifecycle {
     ignore_changes = [
       state
