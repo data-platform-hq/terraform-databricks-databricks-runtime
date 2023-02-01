@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.1.1...v1.1.2) (2023-02-01)
+
+
+### Bug Fixes
+
+* data_security_mode set to NONE by default ([bb62a38](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/bb62a38745c14d641b17bedcf1c6c797acbf7409))
+
 ## [1.1.1](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.1.0...v1.1.1) (2023-01-31)
 
 
