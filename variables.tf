@@ -123,6 +123,16 @@ variable "spark_conf" {
   default     = {}
 }
 
+variable "cluster_log_conf_destination" {
+  type        = string
+  description = "Provide a dbfs location, example 'dbfs:/cluster-logs', to push all cluster logs to certain location"
+  default     = ""
+  validation {
+    condition     = length(var.cluster_log_conf_destination) == 0 ? true : startswith(var.cluster_log_conf_destination, "dbfs:/")
+    error_message = "Provide valid path to dbfs logs folder, example: 'dbfs:/mnt/logs'"
+  }
+}
+
 variable "node_type" {
   type        = string
   description = "Databricks_node_type id"
