@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.1.2...v1.1.3) (2023-02-01)
+
+
+### Bug Fixes
+
+* min/max workers set to 1/2 ([0764c71](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/0764c7125f5272bef20f72da4918e349df235c28))
+
 ## [1.1.2](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.1.1...v1.1.2) (2023-02-01)
 
 
