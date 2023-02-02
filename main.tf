@@ -42,9 +42,10 @@ resource "azurerm_role_assignment" "this" {
 }
 
 resource "databricks_cluster" "this" {
-  cluster_name  = "shared autoscaling"
-  spark_version = var.spark_version
-  spark_conf    = var.spark_conf
+  cluster_name   = "shared autoscaling"
+  spark_version  = var.spark_version
+  spark_conf     = var.spark_conf
+  spark_env_vars = var.spark_env_vars
 
   data_security_mode      = var.data_security_mode
   node_type_id            = var.node_type
