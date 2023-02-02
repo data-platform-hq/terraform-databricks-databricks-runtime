@@ -123,6 +123,12 @@ variable "spark_conf" {
   default     = {}
 }
 
+variable "spark_env_vars" {
+  type        = map(any)
+  description = "Map with environment variable key-value pairs to fine-tune Spark clusters. Key-value pairs of the form (X,Y) are exported (i.e., X='Y') while launching the driver and workers."
+  default     = {}
+}
+
 variable "cluster_log_conf_destination" {
   type        = string
   description = "Provide a dbfs location to push all cluster logs to certain location"
