@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.1.4...v1.1.5) (2023-02-02)
+
+
+### Bug Fixes
+
+* added spark_env_vars parameter to cluster ([c7c1005](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/c7c1005c0d5f7eec5b8db37e739a2f9663975ca4))
+
 ## [1.1.4](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.1.3...v1.1.4) (2023-02-01)
 
 
