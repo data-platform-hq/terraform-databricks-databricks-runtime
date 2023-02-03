@@ -14,4 +14,5 @@ output "cluster_policies_object" {
     name    = databricks_cluster_policy.this[policy.name].name
     can_use = policy.can_use
   } if policy.definition != null]
+  description = "Databricks Cluster Policies object map"
 }
