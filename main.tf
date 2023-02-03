@@ -43,8 +43,8 @@ resource "azurerm_role_assignment" "this" {
 
 resource "databricks_cluster_policy" "this" {
   for_each = {
-  for param in var.custom_cluster_policies : (param.name) => param.definition
-  if param.definition != null
+    for param in var.custom_cluster_policies : (param.name) => param.definition
+    if param.definition != null
   }
 
   name       = each.key
@@ -57,7 +57,7 @@ resource "databricks_cluster" "this" {
   spark_conf     = var.spark_conf
   spark_env_vars = var.spark_env_vars
 
-  policy_id      = one([for policy in var.custom_cluster_policies : databricks_cluster_policy.this[policy.name].id if policy.assigned])
+  policy_id = one([for policy in var.custom_cluster_policies : databricks_cluster_policy.this[policy.name].id if policy.assigned])
 
   data_security_mode      = var.data_security_mode
   node_type_id            = var.node_type

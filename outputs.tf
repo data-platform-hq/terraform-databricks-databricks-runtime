@@ -13,5 +13,5 @@ output "cluster_policies_object" {
     id      = databricks_cluster_policy.this[policy.name].id
     name    = databricks_cluster_policy.this[policy.name].name
     can_use = policy.can_use
-  }]
+  } if policy.definition != null]
 }
