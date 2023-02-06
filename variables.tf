@@ -101,6 +101,32 @@ variable "permissions" {
   ]
 }
 
+variable "custom_cluster_policies" {
+  type = list(object({
+    name       = string
+    can_use    = list(string)
+    definition = any
+    assigned   = bool
+  }))
+  description = <<-EOT
+Provides an ability to create custom cluster policy, assign it to cluster and grant CAN_USE permissions on it to certain custom groups
+name - name of custom policy;
+can_use - list of string, where values are custom group names, there groups have to be created with Terraform
+definition - JSON document expressed in Databricks Policy Definition Language. No need to call 'jsonencode()' function on it when providing a value
+assigned - boolean flag which assigns policy to default 'shared autoscaling' cluster, only single custom policy could be assigned
+EOT
+  default = [{
+    name       = null
+    can_use    = null
+    definition = null
+    assigned   = null
+  }]
+  validation {
+    condition     = length([for policy in var.custom_cluster_policies : policy.assigned if policy.assigned]) <= 1
+    error_message = "Only single cluster policy assignment allowed. Please set 'assigned' parameter to 'true' for exact one or none policy"
+  }
+}
+
 variable "data_security_mode" {
   type        = string
   description = "Security features of the cluster"
