@@ -119,7 +119,7 @@ EOT
     name       = null
     can_use    = null
     definition = null
-    assigned   = null
+    assigned   = false
   }]
   validation {
     condition     = length([for policy in var.custom_cluster_policies : policy.assigned if policy.assigned]) <= 1
