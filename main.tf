@@ -42,10 +42,10 @@ resource "azurerm_role_assignment" "this" {
 }
 
 resource "databricks_cluster_policy" "this" {
-  for_each = {
+  for_each = var.sku == "premium" ? {
     for param in var.custom_cluster_policies : (param.name) => param.definition
     if param.definition != null
-  }
+  } : {}
 
   name       = each.key
   definition = jsonencode(each.value)
