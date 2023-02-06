@@ -65,7 +65,7 @@ No modules.
 | <a name="input_spark_version"></a> [spark\_version](#input\_spark\_version)  | Runtime version | `string` | "11.3.x-scala2.12" | no |
 | <a name="input_spark_conf"></a> [spark\_conf](#input\_spark\_conf)| Map with key-value pairs to fine-tune Spark clusters, where you can provide custom Spark configuration properties in a cluster configuration. | `map(any)`  | {} | no |
 | <a name="input_spark_env_vars"></a> [spark_env_vars](#input\_spark_env_vars)| Map with environment variable key-value pairs to fine-tune Spark clusters. Key-value pairs of the form (X,Y) are exported (i.e., X='Y') while launching the driver and workers.| `map(any)`| {} | no |
-| <a name="input_cluster_log_conf_destination"></a> [cluster\_log\_conf\_destination](#input\_cluster\_log\_conf\_destination)  | Provide a dbfs location, example 'dbfs:/cluster-logs', to push all cluster logs to certain location | `string` | " " | no |
+| <a name="input_cluster_log_conf_destination"></a> [cluster\_log\_conf\_destination](#input\_cluster\_log\_conf\_destination)  | Provide a dbfs location, example 'dbfs:/cluster-logs', to push all cluster logs to certain location | `string` | "" | no |
 | <a name="input_node_type"></a> [spark\_node\_type](#input\_node\_type)| Databricks_node_type id | `string` | "Standard_D3_v2" | no |
 | <a name="input_mountpoints"></a> [mountpoints](#input\_mountpoints) | Mountpoints for databricks | `map(any)`| null | no |
 
