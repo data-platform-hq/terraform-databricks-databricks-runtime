@@ -1,3 +1,17 @@
+# [1.2.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.1.5...v1.2.0) (2023-02-06)
+
+
+### Bug Fixes
+
+* added condition for policy assignment ([3d49147](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/3d49147c2bd67a2d33c94e307879a61ae154c6ed))
+* added condition for policy creation ([225803f](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/225803f25ed7ec8f96adb462d2d02c1d6e1de93e))
+* output condition; fmt ([f5121f1](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/f5121f190aae190232690e75de953ebf3797e856))
+
+
+### Features
+
+* custom cluster policy ([cfaf97d](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/cfaf97d7790155d26989cbab60df44e1720d646e))
+
 ## [1.1.5](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.1.4...v1.1.5) (2023-02-02)
 
 
