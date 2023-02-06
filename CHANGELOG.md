@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.2.0...v1.2.1) (2023-02-06)
+
+
+### Bug Fixes
+
+* default value of policies var 'assigned' param set to false by default ([80d2a8b](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/80d2a8b7f74648441b246ff406dea40fd838bbdd))
+
 # [1.2.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.1.5...v1.2.0) (2023-02-06)
 
 
