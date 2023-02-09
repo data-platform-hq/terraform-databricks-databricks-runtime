@@ -13,28 +13,21 @@ data "azurerm_key_vault_secret" "tenant_id" {
   key_vault_id = var.key_vault_id
 }
 
-locals {
-  secrets = merge(var.secrets, {
-    (var.sp_client_id_secret_name) = { value = data.azurerm_key_vault_secret.sp_client_id.value }
-    (var.sp_key_secret_name)       = { value = data.azurerm_key_vault_secret.sp_key.value }
-  })
-}
-
 resource "databricks_token" "pat" {
   comment          = "Terraform Provisioning"
   lifetime_seconds = var.pat_token_lifetime_seconds
 }
 
 resource "databricks_user" "this" {
-  for_each  = var.sku == "standard" ? toset(var.users) : []
+  for_each  = var.sku == "premium" ? [] : toset(var.users)
   user_name = each.value
   lifecycle { ignore_changes = [external_id] }
 }
 
 resource "azurerm_role_assignment" "this" {
   for_each = {
-    for permision in var.permissions : "${permision.object_id}-${permision.role}" => permision
-    if permision.role != null
+    for permission in var.permissions : "${permission.object_id}-${permission.role}" => permission
+    if permission.role != null
   }
   scope                = var.workspace_id
   role_definition_name = each.value.role
