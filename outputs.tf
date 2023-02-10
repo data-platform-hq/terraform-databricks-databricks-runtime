@@ -16,3 +16,11 @@ output "cluster_policies_object" {
   } if policy.definition != null]
   description = "Databricks Cluster Policies object map"
 }
+
+output "secret_scope_object" {
+  value = [for param in var.secret_scope : {
+    scope_name = databricks_secret_scope.this[param.scope_name].name
+    acl        = param.acl
+  } if param.acl != null]
+  description = "Databricks-managed Secret Scope object map to create ACLs"
+}
