@@ -1,3 +1,16 @@
+# [1.3.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.2.1...v1.3.0) (2023-02-10)
+
+
+### Bug Fixes
+
+* fixed secret scope name ([462d5a4](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/462d5a42ea3d33f0f7c919535fe915b7c296243a))
+* secrets dependance ([f4c7cbd](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/f4c7cbdb8647bffda32abc492b35923d8bfaf517))
+
+
+### Features
+
+* custom secret scope ([e19a83c](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/e19a83cc6d5e2816762cbfe7693006eb9f7b3560))
+
 ## [1.2.1](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.2.0...v1.2.1) (2023-02-06)
 
 
