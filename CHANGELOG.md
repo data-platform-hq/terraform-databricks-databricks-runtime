@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.3.0...v1.3.1) (2023-02-14)
+
+
+### Bug Fixes
+
+* output dependant on sku type for cluster ([f22806f](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/f22806fadc3272108042478bab088906fc324602))
+
 # [1.3.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.2.1...v1.3.0) (2023-02-10)
 
 
