@@ -161,9 +161,12 @@ variable "node_type" {
 }
 
 variable "mountpoints" {
-  type        = map(any)
+  type = map(object({
+    storage_account_name = string
+    container_name       = string
+  }))
   description = "Mountpoints for databricks"
-  default     = null
+  default     = {}
 }
 
 # Secret Scope variables
