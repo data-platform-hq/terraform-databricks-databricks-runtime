@@ -1,3 +1,12 @@
+## [1.3.2](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.3.1...v1.3.2) (2023-02-28)
+
+
+### Bug Fixes
+
+* fmt ([1f7759c](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/1f7759c2787d6a3251661c758d01ee5e8dd2cb5c))
+* updated mount uri ([eebac39](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/eebac39ccf01d10faa50b872576a15443e7cc2db))
+* updated mountpoins variable default type ([6fcd5d1](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/6fcd5d11b5e0cc3ae3aef1a1b99c66f93b93a397))
+
 ## [1.3.1](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.3.0...v1.3.1) (2023-02-14)
 
 
