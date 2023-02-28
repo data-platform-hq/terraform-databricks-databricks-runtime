@@ -161,7 +161,7 @@ variable "node_type" {
 }
 
 variable "mountpoints" {
-  type        = map(object({
+  type = map(object({
     storage_account_name = string
     container_name       = string
   }))
