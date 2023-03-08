@@ -45,7 +45,7 @@ resource "databricks_cluster_policy" "this" {
 }
 
 resource "databricks_cluster" "this" {
-  cluster_name   = "shared autoscaling"
+  cluster_name   = var.custom_default_cluster_name == null ? "shared autoscaling" : var.custom_default_cluster_name
   spark_version  = var.spark_version
   spark_conf     = var.spark_conf
   spark_env_vars = var.spark_env_vars
