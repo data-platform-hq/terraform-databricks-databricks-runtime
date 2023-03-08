@@ -126,6 +126,12 @@ variable "data_security_mode" {
   }
 }
 
+variable "custom_default_cluster_name" {
+  type        = string
+  description = "Databricks cluster name, which does not have to be unique"
+  default     = null
+}
+
 variable "spark_version" {
   type        = string
   description = "Runtime version"
