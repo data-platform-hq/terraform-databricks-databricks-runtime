@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.3.2...v1.4.0) (2023-03-08)
+
+
+### Features
+
+* added custom names for resources ([9a0a158](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/9a0a1586475b07895c8a033c11962e4fcde4ff6e))
+
 ## [1.3.2](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.3.1...v1.3.2) (2023-02-28)
 
 
