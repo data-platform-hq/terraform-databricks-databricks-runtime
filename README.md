@@ -2,7 +2,74 @@
 Terraform module used for Databricks Workspace configuration and Resources creation
 
 ## Usage
+This module provides an ability for Databricks Workspace configuration and Resources creation.
 
+```hcl
+data "azurerm_databricks_workspace" "example" {
+  name                = "example-workspace"
+  resource_group_name = "example-rg"
+}
+
+data "azurerm_key_vault" "example" {
+  name                = "examplekeyvault"
+  resource_group_name = "example-rg"
+}
+
+data "azurerm_storage_account" "example" {
+  name                = "example-storage"
+  resource_group_name = "example-rg"
+}
+
+module "databricks_runtime_core" {
+  source  = "data-platform-hq/databricks-runtime/databricks"
+  version = "1.4.0"
+
+  sku          = "standard"
+  workspace_id = azurerm_databricks_workspace.example.workspace_id
+  users        = ["user1", "user2"]
+
+  # Parameters of Service principal used for ADLS mount
+  key_vault_id             =  data.azurerm_key_vault.example.id
+  sp_client_id_secret_name = "sp-client-id"
+  sp_key_secret_name       = "sp-key"
+  tenant_id_secret_name    = "infra-arm-tenant-id"
+
+  # Default cluster parameters
+  custom_default_cluster_name  = "databricks_example_custer"
+  cluster_nodes_availability   = "SPOT_AZURE"
+
+
+  cluster_log_conf_destination = "dbfs:/cluster-logs"
+  custom_cluster_policies      =  [{
+    name     = "custom_policy_1",
+    assigned = true,
+    can_use  =  null,
+    definition = {
+      "autoscale.max_workers": {
+        "type": "range",
+        "maxValue": 3,
+        "defaultValue": 2
+      },
+    }
+  }]
+
+  # Additional Secret Scope
+  secret_scope = [{
+    scope_name = null
+    acl        = null
+    secrets    = null
+  }]
+
+  mountpoints = {
+    storage_account_name = data.azurerm_storage_account.example.name
+    container_name       = "example_container"
+  }
+
+  providers = {
+    databricks = databricks.main
+  }
+}
+```
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
