@@ -2,7 +2,12 @@
 Terraform module used for Databricks Workspace configuration and Resources creation
 
 ## Usage
-This module provides an ability for Databricks Workspace configuration and Resources creation.
+This module provides an ability for Databricks Workspace configuration and Resources creation, for example:
+1. Default Shared Autoscaling cluster
+2. ADLS Gen2 Mount
+3. Secret scope and its secrets
+4. Cluster policies
+5. Users for Standard SKU Worspaces
 
 ```hcl
 data "azurerm_databricks_workspace" "example" {
