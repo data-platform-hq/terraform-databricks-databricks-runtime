@@ -10,25 +10,34 @@ data "azurerm_databricks_workspace" "example" {
   resource_group_name = "example-rg"
 }
 
+# Key Vault which contains Service Principal credentials (App ID and Secret) for mounting ADLS Gen 2
 data "azurerm_key_vault" "example" {
-  name                = "examplekeyvault"
+  name                = "example-key-vault"
   resource_group_name = "example-rg"
 }
 
 data "azurerm_storage_account" "example" {
-  name                = "example-storage"
+  name                = "examplestorage"
   resource_group_name = "example-rg"
+}
+
+provider "databricks" {
+  alias                       = "main"
+  host                        = data.azurerm_databricks_workspace.example.workspace_url
+  azure_workspace_resource_id = data.azurerm_databricks_workspace.example.id
 }
 
 module "databricks_runtime_core" {
   source  = "data-platform-hq/databricks-runtime/databricks"
-  version = "1.4.0"
 
-  sku          = "standard"
-  workspace_id = azurerm_databricks_workspace.example.workspace_id
-  users        = ["user1", "user2"]
+  sku          = "premium"
+  workspace_id = data.azurerm_databricks_workspace.example.workspace_id
+  
+  # This parameter only used when workspace wku equals 'standard'
+  users        = ["user1", "user2"]  
 
   # Parameters of Service principal used for ADLS mount
+  # Imports App ID and Secret of Service Principal
   key_vault_id             =  data.azurerm_key_vault.example.id
   sp_client_id_secret_name = "sp-client-id"
   sp_key_secret_name       = "sp-key"
@@ -36,9 +45,7 @@ module "databricks_runtime_core" {
 
   # Default cluster parameters
   custom_default_cluster_name  = "databricks_example_custer"
-  cluster_nodes_availability   = "SPOT_AZURE"
-
-
+  cluster_nodes_availability   = "SPOT_AZURE" # requires Regional Spot quotas increase 
   cluster_log_conf_destination = "dbfs:/cluster-logs"
   custom_cluster_policies      =  [{
     name     = "custom_policy_1",
@@ -55,9 +62,11 @@ module "databricks_runtime_core" {
 
   # Additional Secret Scope
   secret_scope = [{
-    scope_name = null
-    acl        = null
-    secrets    = null
+    scope_name = "extra-scope"
+    acl        = null # Only group names are allowed. If left empty then only Worspace admins could access these keys
+    secrets    = [
+      { key = "secret-name", string_value = "secret-value"}
+    ]
   }]
 
   mountpoints = {
