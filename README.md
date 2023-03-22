@@ -10,9 +10,17 @@ This module provides an ability for Databricks Workspace configuration and Resou
 5. Users for Standard SKU Worspaces
 
 ```hcl
+# Prerequisite resources
 data "azurerm_databricks_workspace" "example" {
   name                = "example-workspace"
   resource_group_name = "example-rg"
+}
+
+# Databricks Provider configuration
+provider "databricks" {
+  alias                       = "main"
+  host                        = data.azurerm_databricks_workspace.example.workspace_url
+  azure_workspace_resource_id = data.azurerm_databricks_workspace.example.id
 }
 
 # Key Vault which contains Service Principal credentials (App ID and Secret) for mounting ADLS Gen 2
@@ -26,12 +34,7 @@ data "azurerm_storage_account" "example" {
   resource_group_name = "example-rg"
 }
 
-provider "databricks" {
-  alias                       = "main"
-  host                        = data.azurerm_databricks_workspace.example.workspace_url
-  azure_workspace_resource_id = data.azurerm_databricks_workspace.example.id
-}
-
+# Databricks Runtime module usage example
 module "databricks_runtime_core" {
   source  = "data-platform-hq/databricks-runtime/databricks"
 
@@ -42,7 +45,7 @@ module "databricks_runtime_core" {
   users        = ["user1", "user2"]  
 
   # Parameters of Service principal used for ADLS mount
-  # Imports App ID and Secret of Service Principal
+  # Imports App ID and Secret of Service Principal from target Key Vault
   key_vault_id             =  data.azurerm_key_vault.example.id
   sp_client_id_secret_name = "sp-client-id"
   sp_key_secret_name       = "sp-key"
@@ -50,7 +53,7 @@ module "databricks_runtime_core" {
 
   # Default cluster parameters
   custom_default_cluster_name  = "databricks_example_custer"
-  cluster_nodes_availability   = "SPOT_AZURE" # requires Regional Spot quotas increase 
+  cluster_nodes_availability   = "SPOT_AZURE" # it required to increase Regional Spot quotas  
   cluster_log_conf_destination = "dbfs:/cluster-logs"
   custom_cluster_policies      =  [{
     name     = "custom_policy_1",
@@ -68,7 +71,7 @@ module "databricks_runtime_core" {
   # Additional Secret Scope
   secret_scope = [{
     scope_name = "extra-scope"
-    acl        = null # Only group names are allowed. If left empty then only Worspace admins could access these keys
+    acl        = null # Only group names are allowed. If left empty then only Workspace admins could access these keys
     secrets    = [
       { key = "secret-name", string_value = "secret-value"}
     ]
