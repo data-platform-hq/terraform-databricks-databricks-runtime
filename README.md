@@ -47,9 +47,9 @@ module "databricks_runtime_core" {
   # Parameters of Service principal used for ADLS mount
   # Imports App ID and Secret of Service Principal from target Key Vault
   key_vault_id             =  data.azurerm_key_vault.example.id
-  sp_client_id_secret_name = "sp-client-id"
-  sp_key_secret_name       = "sp-key"
-  tenant_id_secret_name    = "infra-arm-tenant-id"
+  sp_client_id_secret_name = "sp-client-id" # secret's name that stores Service Principal App ID
+  sp_key_secret_name       = "sp-key" # secret's name that stores Service Principal Secret Key
+  tenant_id_secret_name    = "infra-arm-tenant-id" # secret's name that stores tenant id value
 
   # Default cluster parameters
   custom_default_cluster_name  = "databricks_example_custer"
