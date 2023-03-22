@@ -2,7 +2,91 @@
 Terraform module used for Databricks Workspace configuration and Resources creation
 
 ## Usage
+This module provides an ability for Databricks Workspace configuration and Resources creation, for example:
+1. Default Shared Autoscaling cluster
+2. ADLS Gen2 Mount
+3. Secret scope and its secrets
+4. Cluster policies
+5. Users for Standard SKU Worspaces
 
+```hcl
+# Prerequisite resources
+data "azurerm_databricks_workspace" "example" {
+  name                = "example-workspace"
+  resource_group_name = "example-rg"
+}
+
+# Databricks Provider configuration
+provider "databricks" {
+  alias                       = "main"
+  host                        = data.azurerm_databricks_workspace.example.workspace_url
+  azure_workspace_resource_id = data.azurerm_databricks_workspace.example.id
+}
+
+# Key Vault which contains Service Principal credentials (App ID and Secret) for mounting ADLS Gen 2
+data "azurerm_key_vault" "example" {
+  name                = "example-key-vault"
+  resource_group_name = "example-rg"
+}
+
+data "azurerm_storage_account" "example" {
+  name                = "examplestorage"
+  resource_group_name = "example-rg"
+}
+
+# Databricks Runtime module usage example
+module "databricks_runtime_core" {
+  source  = "data-platform-hq/databricks-runtime/databricks"
+
+  sku          = "premium"
+  workspace_id = data.azurerm_databricks_workspace.example.workspace_id
+  
+  # This parameter only used when workspace wku equals 'standard'
+  users        = ["user1", "user2"]  
+
+  # Parameters of Service principal used for ADLS mount
+  # Imports App ID and Secret of Service Principal from target Key Vault
+  key_vault_id             =  data.azurerm_key_vault.example.id
+  sp_client_id_secret_name = "sp-client-id" # secret's name that stores Service Principal App ID
+  sp_key_secret_name       = "sp-key" # secret's name that stores Service Principal Secret Key
+  tenant_id_secret_name    = "infra-arm-tenant-id" # secret's name that stores tenant id value
+
+  # Default cluster parameters
+  custom_default_cluster_name  = "databricks_example_custer"
+  cluster_nodes_availability   = "SPOT_AZURE" # it required to increase Regional Spot quotas  
+  cluster_log_conf_destination = "dbfs:/cluster-logs"
+  custom_cluster_policies      =  [{
+    name     = "custom_policy_1",
+    assigned = true,
+    can_use  =  null,
+    definition = {
+      "autoscale.max_workers": {
+        "type": "range",
+        "maxValue": 3,
+        "defaultValue": 2
+      },
+    }
+  }]
+
+  # Additional Secret Scope
+  secret_scope = [{
+    scope_name = "extra-scope"
+    acl        = null # Only group names are allowed. If left empty then only Workspace admins could access these keys
+    secrets    = [
+      { key = "secret-name", string_value = "secret-value"}
+    ]
+  }]
+
+  mountpoints = {
+    storage_account_name = data.azurerm_storage_account.example.name
+    container_name       = "example_container"
+  }
+
+  providers = {
+    databricks = databricks.main
+  }
+}
+```
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
