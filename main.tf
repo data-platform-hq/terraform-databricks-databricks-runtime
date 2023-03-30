@@ -1,3 +1,9 @@
+/* Premium
+locals {
+  ip_rules = var.ip_rules == null ? null : values(var.ip_rules)
+}
+*/
+
 data "azurerm_key_vault_secret" "sp_client_id" {
   name         = var.sp_client_id_secret_name
   key_vault_id = var.key_vault_id
@@ -13,18 +19,19 @@ data "azurerm_key_vault_secret" "tenant_id" {
   key_vault_id = var.key_vault_id
 }
 
-resource "databricks_token" "pat" {
+resource "databricks_token" "pat" { #
   comment          = "Terraform Provisioning"
   lifetime_seconds = var.pat_token_lifetime_seconds
 }
 
-resource "databricks_user" "this" {
-  for_each  = var.sku == "premium" ? [] : toset(var.users)
-  user_name = each.value
-  lifecycle { ignore_changes = [external_id] }
-}
+#resource "databricks_user" "this" { # Only for 'Standard' SKU type
+#  #for_each  = var.sku == "premium" ? [] : toset(var.users)
+#  for_each  = toset(var.users)
+#  user_name = each.value
+#  lifecycle { ignore_changes = [external_id] }
+#}
 
-resource "azurerm_role_assignment" "this" {
+resource "azurerm_role_assignment" "this" { ### 
   for_each = {
     for permission in var.permissions : "${permission.object_id}-${permission.role}" => permission
     if permission.role != null
@@ -35,10 +42,11 @@ resource "azurerm_role_assignment" "this" {
 }
 
 resource "databricks_cluster_policy" "this" {
-  for_each = var.sku == "premium" ? {
+  #for_each = var.sku == "premium" ? {
+  for_each =  {
     for param in var.custom_cluster_policies : (param.name) => param.definition
     if param.definition != null
-  } : {}
+  } # : {}
 
   name       = each.key
   definition = jsonencode(each.value)
@@ -49,8 +57,6 @@ resource "databricks_cluster" "this" {
   spark_version  = var.spark_version
   spark_conf     = var.spark_conf
   spark_env_vars = var.spark_env_vars
-
-  policy_id = var.sku == "premium" ? one([for policy in var.custom_cluster_policies : databricks_cluster_policy.this[policy.name].id if policy.assigned]) : null
 
   data_security_mode      = var.data_security_mode
   node_type_id            = var.node_type
@@ -86,3 +92,22 @@ resource "databricks_cluster" "this" {
     }
   }
 }
+/* Premium
+resource "databricks_workspace_conf" "this" {
+  count = local.ip_rules == null ? 0 : 1
+
+  custom_config = {
+    "enableIpAccessLists" : true
+  }
+}
+
+resource "databricks_ip_access_list" "this" {
+  count = local.ip_rules == null ? 0 : 1
+
+  label        = "allow_in"
+  list_type    = "ALLOW"
+  ip_addresses = local.ip_rules
+
+  depends_on = [databricks_workspace_conf.this]
+}
+*/

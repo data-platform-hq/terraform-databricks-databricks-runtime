@@ -1,3 +1,4 @@
+
 locals {
   sp_secrets = {
     (var.sp_client_id_secret_name) = { value = data.azurerm_key_vault_secret.sp_client_id.value }
@@ -14,7 +15,7 @@ locals {
 # Secret Scope with SP secrets for mounting Azure Data Lake Storage
 resource "databricks_secret_scope" "main" {
   name                     = "main"
-  initial_manage_principal = var.sku == "premium" ? null : "users"
+  initial_manage_principal = "users" #var.sku == "premium" ? null : "users"
 }
 
 resource "databricks_secret" "main" {
@@ -33,7 +34,7 @@ resource "databricks_secret_scope" "this" {
   }
 
   name                     = each.key
-  initial_manage_principal = var.sku == "premium" ? null : "users"
+  initial_manage_principal = "users"
 }
 
 resource "databricks_secret" "this" {

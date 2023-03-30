@@ -216,3 +216,48 @@ EOT
 #    dns_name     = null
 #  }
 #}
+
+# Identity Access Management variables
+variable "user_object_ids" {
+  type        = map(string)
+  description = "Map of AD usernames and corresponding object IDs"
+  default     = {}
+}
+
+variable "workspace_admins" {
+  type = object({
+    user              = list(string)
+    service_principal = list(string)
+  })
+  description = "Provide users or service principals to grant them Admin permissions in Workspace."
+  default = {
+    user              = null
+    service_principal = null
+  }
+}
+
+variable "iam" {
+  type = map(object({
+    user                       = optional(list(string))
+    service_principal          = optional(list(string))
+    entitlements               = optional(list(string))
+    default_cluster_permission = optional(string)
+  }))
+  description = "Used to create workspace group. Map of group name and its parameters, such as users and service principals added to the group. Also possible to configure group entitlements."
+  default     = {}
+
+  validation {
+    condition = length([for item in values(var.iam)[*] : item.entitlements if item.entitlements != null]) != 0 ? alltrue([
+      for entry in flatten(values(var.iam)[*].entitlements) : contains(["allow_cluster_create", "allow_instance_pool_create", "databricks_sql_access"], entry) if entry != null
+    ]) : true
+    error_message = "Entitlements validation. The only suitable values are: databricks_sql_access, allow_instance_pool_create, allow_cluster_create"
+  }
+}
+
+/* Premium
+variable "ip_rules" {
+  type        = map(string)
+  description = "Map of IP addresses permitted for access to DB"
+  default     = {}
+}
+*/
