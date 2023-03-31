@@ -23,12 +23,6 @@ variable "key_vault_id" {
   description = "ID of the Key Vault instance where the Secret resides"
 }
 
-variable "sku" {
-  type        = string
-  description = "The sku to use for the Databricks Workspace: [standard|premium|trial]"
-  default     = "standard"
-}
-
 variable "pat_token_lifetime_seconds" {
   type        = number
   description = "The lifetime of the token, in seconds. If no lifetime is specified, the token remains valid indefinitely"
@@ -50,33 +44,6 @@ variable "permissions" {
       role      = null
     }
   ]
-}
-
-# Cluster policy variables
-variable "custom_cluster_policies" {
-  type = list(object({
-    name       = string
-    can_use    = list(string)
-    definition = any
-    assigned   = bool
-  }))
-  description = <<-EOT
-Provides an ability to create custom cluster policy, assign it to cluster and grant CAN_USE permissions on it to certain custom groups
-name - name of custom cluster policy to create
-can_use - list of string, where values are custom group names, there groups have to be created with Terraform;
-definition - JSON document expressed in Databricks Policy Definition Language. No need to call 'jsonencode()' function on it when providing a value;
-assigned - boolean flag which assigns policy to default 'shared autoscaling' cluster, only single custom policy could be assigned;
-EOT
-  default = [{
-    name       = null
-    can_use    = null
-    definition = null
-    assigned   = false
-  }]
-  validation {
-    condition     = length([for policy in var.custom_cluster_policies : policy.assigned if policy.assigned]) <= 1
-    error_message = "Only single cluster policy assignment allowed. Please set 'assigned' parameter to 'true' for exact one or none policy"
-  }
 }
 
 # Shared autoscaling cluster config variables
@@ -174,90 +141,3 @@ variable "mountpoints" {
   description = "Mountpoints for databricks"
   default     = {}
 }
-
-# Secret Scope variables
-variable "secret_scope" {
-  type = list(object({
-    scope_name = string
-    acl = optional(list(object({
-      principal  = string
-      permission = string
-    })))
-    secrets = optional(list(object({
-      key          = string
-      string_value = string
-    })))
-  }))
-  description = <<-EOT
-Provides an ability to create custom Secret Scope, store secrets in it and assigning ACL for access management
-scope_name - name of Secret Scope to create;
-acl - list of objects, where 'principal' custom group name, this group is created in 'Premium' module; 'permission' is one of "READ", "WRITE", "MANAGE";
-secrets - list of objects, where object's 'key' param is created key name and 'string_value' is a value for it;
-EOT
-  default = [{
-    scope_name = null
-    acl        = null
-    secrets    = null
-  }]
-}
-
-# At the nearest future, Azure will allow acquiring AAD tokens by service principals,
-# thus providing an ability to create Azure backed Key Vault with Terraform
-# https://github.com/databricks/terraform-provider-databricks/pull/1965
-
-#variable "key_vault_secret_scope" {
-#  type = object({
-#    key_vault_id = string
-#    dns_name     = string
-#  })
-# description = "Object with Azure Key Vault parameters required for creation of Azure-backed Databricks Secret scope"
-#  default = {
-#    key_vault_id = null
-#    dns_name     = null
-#  }
-#}
-
-# Identity Access Management variables
-variable "user_object_ids" {
-  type        = map(string)
-  description = "Map of AD usernames and corresponding object IDs"
-  default     = {}
-}
-
-variable "workspace_admins" {
-  type = object({
-    user              = list(string)
-    service_principal = list(string)
-  })
-  description = "Provide users or service principals to grant them Admin permissions in Workspace."
-  default = {
-    user              = null
-    service_principal = null
-  }
-}
-
-variable "iam" {
-  type = map(object({
-    user                       = optional(list(string))
-    service_principal          = optional(list(string))
-    entitlements               = optional(list(string))
-    default_cluster_permission = optional(string)
-  }))
-  description = "Used to create workspace group. Map of group name and its parameters, such as users and service principals added to the group. Also possible to configure group entitlements."
-  default     = {}
-
-  validation {
-    condition = length([for item in values(var.iam)[*] : item.entitlements if item.entitlements != null]) != 0 ? alltrue([
-      for entry in flatten(values(var.iam)[*].entitlements) : contains(["allow_cluster_create", "allow_instance_pool_create", "databricks_sql_access"], entry) if entry != null
-    ]) : true
-    error_message = "Entitlements validation. The only suitable values are: databricks_sql_access, allow_instance_pool_create, allow_cluster_create"
-  }
-}
-
-/* Premium
-variable "ip_rules" {
-  type        = map(string)
-  description = "Map of IP addresses permitted for access to DB"
-  default     = {}
-}
-*/
