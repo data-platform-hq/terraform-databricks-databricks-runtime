@@ -141,3 +141,45 @@ variable "mountpoints" {
   description = "Mountpoints for databricks"
   default     = {}
 }
+
+# Secret Scope variables
+variable "secret_scope" {
+  type = list(object({
+    scope_name = string
+    acl = optional(list(object({
+      principal  = string
+      permission = string
+    })))
+    secrets = optional(list(object({
+      key          = string
+      string_value = string
+    })))
+  }))
+  description = <<-EOT
+Provides an ability to create custom Secret Scope, store secrets in it and assigning ACL for access management
+scope_name - name of Secret Scope to create;
+acl - list of objects, where 'principal' custom group name, this group is created in 'Premium' module; 'permission' is one of "READ", "WRITE", "MANAGE";
+secrets - list of objects, where object's 'key' param is created key name and 'string_value' is a value for it;
+EOT
+  default = [{
+    scope_name = null
+    acl        = null
+    secrets    = null
+  }]
+}
+
+# At the nearest future, Azure will allow acquiring AAD tokens by service principals,
+# thus providing an ability to create Azure backed Key Vault with Terraform
+# https://github.com/databricks/terraform-provider-databricks/pull/1965
+
+#variable "key_vault_secret_scope" {
+#  type = object({
+#    key_vault_id = string
+#    dns_name     = string
+#  })
+# description = "Object with Azure Key Vault parameters required for creation of Azure-backed Databricks Secret scope"
+#  default = {
+#    key_vault_id = null
+#    dns_name     = null
+#  }
+#}
