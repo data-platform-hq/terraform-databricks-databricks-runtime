@@ -1,3 +1,19 @@
+# [1.5.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.4.0...v1.5.0) (2023-04-09)
+
+
+### Bug Fixes
+
+* add end line ([e071f79](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/e071f79b7f30405ce8f43eb66e056a7fa9402dcd))
+* add new line ([63970cb](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/63970cb4cc0c91411fef6d7b7af5d0a4708a6142))
+* updated module usage code example ([59a7ada](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/59a7ada16dce18ef0f5f9ab97f20d140ffdf8d4a))
+
+
+### Features
+
+* delete resource databricks_secret ([0027f1b](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/0027f1bb02e46a616011d0e46aa8bd80702b5f5b))
+* refactor ([b7c3c18](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/b7c3c18da9eec6f958a52c71cdc6116a981df954))
+* refactoring ([9859ab0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/9859ab05cf5770dd2da04a38b65aab0576fa9d68))
+
 # [1.4.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.3.2...v1.4.0) (2023-03-08)
 
 
