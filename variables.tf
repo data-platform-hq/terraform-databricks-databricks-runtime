@@ -23,12 +23,6 @@ variable "key_vault_id" {
   description = "ID of the Key Vault instance where the Secret resides"
 }
 
-variable "sku" {
-  type        = string
-  description = "The sku to use for the Databricks Workspace: [standard|premium|trial]"
-  default     = "standard"
-}
-
 variable "pat_token_lifetime_seconds" {
   type        = number
   description = "The lifetime of the token, in seconds. If no lifetime is specified, the token remains valid indefinitely"
@@ -50,33 +44,6 @@ variable "permissions" {
       role      = null
     }
   ]
-}
-
-# Cluster policy variables
-variable "custom_cluster_policies" {
-  type = list(object({
-    name       = string
-    can_use    = list(string)
-    definition = any
-    assigned   = bool
-  }))
-  description = <<-EOT
-Provides an ability to create custom cluster policy, assign it to cluster and grant CAN_USE permissions on it to certain custom groups
-name - name of custom cluster policy to create
-can_use - list of string, where values are custom group names, there groups have to be created with Terraform;
-definition - JSON document expressed in Databricks Policy Definition Language. No need to call 'jsonencode()' function on it when providing a value;
-assigned - boolean flag which assigns policy to default 'shared autoscaling' cluster, only single custom policy could be assigned;
-EOT
-  default = [{
-    name       = null
-    can_use    = null
-    definition = null
-    assigned   = false
-  }]
-  validation {
-    condition     = length([for policy in var.custom_cluster_policies : policy.assigned if policy.assigned]) <= 1
-    error_message = "Only single cluster policy assignment allowed. Please set 'assigned' parameter to 'true' for exact one or none policy"
-  }
 }
 
 # Shared autoscaling cluster config variables

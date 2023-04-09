@@ -19,7 +19,7 @@ resource "databricks_token" "pat" {
 }
 
 resource "databricks_user" "this" {
-  for_each  = var.sku == "premium" ? [] : toset(var.users)
+  for_each  = toset(var.users)
   user_name = each.value
   lifecycle { ignore_changes = [external_id] }
 }
@@ -34,23 +34,11 @@ resource "azurerm_role_assignment" "this" {
   principal_id         = each.value.object_id
 }
 
-resource "databricks_cluster_policy" "this" {
-  for_each = var.sku == "premium" ? {
-    for param in var.custom_cluster_policies : (param.name) => param.definition
-    if param.definition != null
-  } : {}
-
-  name       = each.key
-  definition = jsonencode(each.value)
-}
-
 resource "databricks_cluster" "this" {
   cluster_name   = var.custom_default_cluster_name == null ? "shared autoscaling" : var.custom_default_cluster_name
   spark_version  = var.spark_version
   spark_conf     = var.spark_conf
   spark_env_vars = var.spark_env_vars
-
-  policy_id = var.sku == "premium" ? one([for policy in var.custom_cluster_policies : databricks_cluster_policy.this[policy.name].id if policy.assigned]) : null
 
   data_security_mode      = var.data_security_mode
   node_type_id            = var.node_type
