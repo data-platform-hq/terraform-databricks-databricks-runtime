@@ -6,8 +6,7 @@ This module provides an ability for Databricks Workspace configuration and Resou
 1. Default Shared Autoscaling cluster
 2. ADLS Gen2 Mount
 3. Secret scope and its secrets
-4. Cluster policies
-5. Users for Standard SKU Worspaces
+4. Users for Standard SKU Worspaces
 
 ```hcl
 # Prerequisite resources
@@ -38,11 +37,16 @@ data "azurerm_storage_account" "example" {
 module "databricks_runtime_core" {
   source  = "data-platform-hq/databricks-runtime/databricks"
 
-  sku          = "premium"
+  sku          = "standard"
   workspace_id = data.azurerm_databricks_workspace.example.workspace_id
   
-  # This parameter only used when workspace wku equals 'standard'
+  # Databricks user
   users        = ["user1", "user2"]  
+
+  # Default cluster parameters
+  custom_default_cluster_name  = "databricks_example_custer"
+  cluster_nodes_availability   = "SPOT_AZURE" # it required to increase Regional Spot quotas  
+  cluster_log_conf_destination = "dbfs:/cluster-logs"
 
   # Parameters of Service principal used for ADLS mount
   # Imports App ID and Secret of Service Principal from target Key Vault
@@ -50,23 +54,6 @@ module "databricks_runtime_core" {
   sp_client_id_secret_name = "sp-client-id" # secret's name that stores Service Principal App ID
   sp_key_secret_name       = "sp-key" # secret's name that stores Service Principal Secret Key
   tenant_id_secret_name    = "infra-arm-tenant-id" # secret's name that stores tenant id value
-
-  # Default cluster parameters
-  custom_default_cluster_name  = "databricks_example_custer"
-  cluster_nodes_availability   = "SPOT_AZURE" # it required to increase Regional Spot quotas  
-  cluster_log_conf_destination = "dbfs:/cluster-logs"
-  custom_cluster_policies      =  [{
-    name     = "custom_policy_1",
-    assigned = true,
-    can_use  =  null,
-    definition = {
-      "autoscale.max_workers": {
-        "type": "range",
-        "maxValue": 3,
-        "defaultValue": 2
-      },
-    }
-  }]
 
   # Additional Secret Scope
   secret_scope = [{
