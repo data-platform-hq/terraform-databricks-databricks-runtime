@@ -43,6 +43,11 @@ module "databricks_runtime_core" {
   # Databricks user
   users        = ["user1", "user2"]  
 
+  # Default cluster parameters
+  custom_default_cluster_name  = "databricks_example_custer"
+  cluster_nodes_availability   = "SPOT_AZURE" # it required to increase Regional Spot quotas  
+  cluster_log_conf_destination = "dbfs:/cluster-logs"
+
   # Parameters of Service principal used for ADLS mount
   # Imports App ID and Secret of Service Principal from target Key Vault
   key_vault_id             =  data.azurerm_key_vault.example.id
