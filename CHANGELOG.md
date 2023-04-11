@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.5.0...v1.5.1) (2023-04-11)
+
+
+### Bug Fixes
+
+* readmi md ([2a792bf](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/2a792bfd9d676867f69c37486e7433f6ec832302))
+
 # [1.5.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.4.0...v1.5.0) (2023-04-09)
 
 
