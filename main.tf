@@ -35,12 +35,17 @@ resource "azurerm_role_assignment" "this" {
 }
 
 resource "databricks_cluster" "this" {
-  cluster_name   = var.custom_default_cluster_name == null ? "shared autoscaling" : var.custom_default_cluster_name
-  spark_version  = var.spark_version
-  spark_conf     = var.spark_conf
+  cluster_name  = var.custom_default_cluster_name == null ? "shared autoscaling" : var.custom_default_cluster_name
+  spark_version = var.spark_version
+  spark_conf = var.cluster_conf_passthrought ? merge({
+    "spark.databricks.cluster.profile" : "serverless",
+    "spark.databricks.repl.allowedLanguages" : "python,sql",
+    "spark.databricks.passthrough.enabled" : "true",
+    "spark.databricks.pyspark.enableProcessIsolation" : "true"
+  }, var.spark_conf) : var.spark_conf
   spark_env_vars = var.spark_env_vars
 
-  data_security_mode      = var.data_security_mode
+  data_security_mode      = var.cluster_conf_passthrought ? null : var.data_security_mode
   node_type_id            = var.node_type
   autotermination_minutes = var.autotermination_minutes
 

@@ -183,3 +183,15 @@ EOT
 #    dns_name     = null
 #  }
 #}
+
+variable "mount_adls_passthrough" {
+  type        = bool
+  description = "Boolean flag to use mount options for credentals passthrough"
+  default     = false
+}
+
+variable "cluster_conf_passthrought" {
+  type        = bool
+  description = "Boolean flag to enable credential passthrough on the cluster"
+  default     = false
+}
