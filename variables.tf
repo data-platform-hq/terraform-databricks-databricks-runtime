@@ -93,6 +93,12 @@ variable "data_security_mode" {
   }
 }
 
+variable "single_user_name" {
+  type        = string
+  description = "single user cluster mode"
+  default     = null
+}
+
 variable "custom_default_cluster_name" {
   type        = string
   description = "Databricks cluster name, which does not have to be unique"
