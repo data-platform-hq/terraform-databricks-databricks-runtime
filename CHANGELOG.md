@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.5.1...v1.6.0) (2023-08-29)
+
+
+### Features
+
+* single user cluster mode ([44e25da](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/44e25da7386db9e407b678f71b5c5fd2f1a626a1))
+
 ## [1.5.1](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.5.0...v1.5.1) (2023-04-11)
 
 
