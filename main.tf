@@ -41,6 +41,7 @@ resource "databricks_cluster" "this" {
   spark_env_vars = var.spark_env_vars
 
   data_security_mode      = var.data_security_mode
+  single_user_name        = var.single_user_name
   node_type_id            = var.node_type
   autotermination_minutes = var.autotermination_minutes
 
