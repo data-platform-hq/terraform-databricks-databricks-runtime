@@ -1,3 +1,16 @@
+# [1.7.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.6.0...v1.7.0) (2024-09-10)
+
+
+### Bug Fixes
+
+* added security KICS scan action ([ca80b96](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/ca80b9681c2dea45822b8095186146aef0911a24))
+* replaced pre-commit repo docs creation/update by GH Actions ([9544e41](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/9544e41640d161b58c54c1d2573f4f4ce48d9d1e))
+
+
+### Features
+
+* upgrade to AzureRM v4 ([138d1bd](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/commit/138d1bdf9c8e49ec7aa079af325e28b88b541bf9))
+
 # [1.6.0](https://github.com/data-platform-hq/terraform-databricks-databricks-runtime/compare/v1.5.1...v1.6.0) (2023-08-29)
 
 
